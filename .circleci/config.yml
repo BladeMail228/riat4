@@ -11,7 +11,12 @@ jobs:
           command: pip install -r requirements.txt
       - run:
           name: Run tests
-          command: pytest
+          command: |
+            mkdir -p test-results
+            pytest --junitxml=test-results/junit.xml
+          when: always
+      - store_test_results:
+          path: test-results
 
 workflows:
   build-and-test:
